@@ -1,0 +1,90 @@
+﻿@page "/aaa"
+
+<style>
+    body
+    {
+        justify-items :center;
+    }
+</style>
+
+<MApp>
+<!-- Must have the app property -->
+  <div>
+    <MAppBar Color="deep-purple accent-4"
+             Dense
+             Dark>
+        <MAppBarNavIcon @onclick="PageItemHandler"></MAppBarNavIcon>
+
+        <MToolbarTitle>2019级12班电子回忆录</MToolbarTitle>
+
+        <MSpacer></MSpacer>
+
+        <MButton Icon >
+            <MIcon>mdi-heart</MIcon>
+        </MButton>
+
+        <MButton icon>
+            <MIcon>mdi-magnify</MIcon>
+        </MButton>
+
+        <MMenu Left
+               Bottom>
+            <ActivatorContent>
+                <MButton Icon @attributes="@context.Attrs">
+                    <MIcon>mdi-dots-vertical</MIcon>
+                </MButton>
+            </ActivatorContent>
+            <ChildContent>
+                <MList>
+                    @for (var i = 0; i < 5; i++)
+                    {
+                        var n = i + 1;
+                        <MListItem @key="n"
+                               OnClick="() => {}">
+                            <MListItemTitle>Option @n</MListItemTitle>
+                        </MListItem>
+                    }
+                </MList>
+            </ChildContent>
+        </MMenu>
+    </MAppBar>
+</div>
+
+  <MMain>
+      <MContainer>
+      Hello World
+      <MCard Elevation="2" style="margin-bottom:10px">
+    <MCardTitle>Card title</MCardTitle>
+    <MCardSubtitle>Subtitle text</MCardSubtitle>
+    <MCardText> Greyhound divisively hello coldly wonderfully marginally far upon excluding. </MCardText>
+    <MCardActions>
+        <MButton Text Color="primary">Action 1</MButton>
+        <MButton Text Color="primary">Action 2</MButton>
+    </MCardActions>
+</MCard>
+
+ <MCard Elevation="4" style="margin-bottom:10px">
+    <MCardTitle>Card title</MCardTitle>
+    <MCardSubtitle>Subtitle text</MCardSubtitle>
+    <MCardText> Greyhound divisively hello coldly wonderfully marginally far upon excluding. </MCardText>
+    <MCardActions>
+        <MButton Text Color="primary">Action 1</MButton>
+        <MButton Text Color="primary">Action 2</MButton>
+    </MCardActions>
+</MCard>
+    </MContainer>
+    Hello World
+  </MMain>
+</MApp>
+
+@code {
+
+    [Parameter]
+    public List<string> Chems { get; set; }
+
+    private void PageItemHandler()
+    {
+        
+    }
+
+}
