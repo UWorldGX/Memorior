@@ -1,4 +1,10 @@
-﻿@page "/counter"
+﻿@using MasaWebApp1.Class;
+@using System.IO;
+@using System.Text;
+
+@*@inject Reader reads;
+*@
+@page "/counter"
 
 <PageTitle>Counter</PageTitle>
 
@@ -6,7 +12,7 @@
 
 <p role="status">Current count: @currentCount</p>
 
-<MButton Depressed Color="primary" @onclick="IncrementCount">Click me</MButton>
+<MButton Depressed Color="primary" @onclick="ButtonHandler">Click me</MButton>
 
 @code {
     private int currentCount = 0;
@@ -14,5 +20,20 @@
     private void IncrementCount()
     {
         currentCount++;
+    }
+
+    private void ButtonHandler()
+    {
+        //string item = reads.Reads("Class\\DataBase.json");
+        if(File.Exists("DataBase.json")==true)
+        {
+            FileStream fileStream = new("DataBase.json", FileMode.OpenOrCreate, FileAccess.Read);
+            StreamReader sr = new(fileStream,Encoding.UTF8);
+            string result=sr.ReadToEnd();
+            sr.Close();
+            fileStream.Close();
+
+        }
+        return;
     }
 }

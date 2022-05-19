@@ -1,13 +1,23 @@
-﻿@page "/aaa"
+﻿@using MasaWebApp1.Class
+@using System.IO
+
+@page "/aaa"
 
 <style>
     body
     {
         justify-items :center;
     }
+     .card-misc-reveal .m-card--reveal {
+        bottom: 0;
+        opacity: 1 !important;
+        position: absolute;
+        width: 100%;
+    }
 </style>
 
-<MApp>
+<body>
+    <MApp>
 <!-- Must have the app property -->
   <div>
     <MAppBar Color="deep-purple accent-4"
@@ -50,40 +60,118 @@
     </MAppBar>
 </div>
 
-  <MMain>
-      <MContainer>
-      Hello World
-      <MCard Elevation="2" style="margin-bottom:10px">
-    <MCardTitle>Card title</MCardTitle>
-    <MCardSubtitle>Subtitle text</MCardSubtitle>
-    <MCardText> Greyhound divisively hello coldly wonderfully marginally far upon excluding. </MCardText>
-    <MCardActions>
-        <MButton Text Color="primary">Action 1</MButton>
-        <MButton Text Color="primary">Action 2</MButton>
-    </MCardActions>
-</MCard>
+ <MMain>
+   <MContainer Fluid>
 
- <MCard Elevation="4" style="margin-bottom:10px">
+      <MRow Dense>
+            @foreach (var card in _cards)
+            {
+                <MCol key="@card.Title" Cols=@card.Flex>
+                    <MCard>
+                        <MImage Src="@card.Src" Class="white--text align-end" Gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" Height=200>
+                            <MCardTitle>@card.Title</MCardTitle>
+                        </MImage>
+
+                        <MCardActions>
+                            <MSpacer></MSpacer>
+                            <MButton Icon>
+                                <MIcon>mdi-heart</MIcon>
+                            </MButton>
+                            <MButton Icon>
+                                <MIcon>mdi-bookmark</MIcon>
+                            </MButton>
+                            <MButton Icon>
+                                <MIcon>mdi-share-variant</MIcon>
+                            </MButton>
+                        </MCardActions>
+                    </MCard>
+                </MCol>
+            }
+        </MRow>
+   <MCard Elevation="2" style="margin-bottom:10px" Class="mx-auto card-misc-reveal">
     <MCardTitle>Card title</MCardTitle>
     <MCardSubtitle>Subtitle text</MCardSubtitle>
     <MCardText> Greyhound divisively hello coldly wonderfully marginally far upon excluding. </MCardText>
     <MCardActions>
-        <MButton Text Color="primary">Action 1</MButton>
-        <MButton Text Color="primary">Action 2</MButton>
+         <MButton Text Color="teal accent-4" OnClick="() => _reveal = true">Learn More</MButton>
     </MCardActions>
-</MCard>
-    </MContainer>
-    Hello World
-  </MMain>
+    <ExpandTransition>
+        <MCard Show="@_reveal" Class="transition-fast-in-fast-out m-card--reveal" Style="height: 100%">
+            <MCardText Class="pb-0">
+                <p class="text-h4 text--primary">
+                    Origin
+                </p>
+                <p>late 16th century (as a noun denoting a place where alms were distributed): from medieval Latin eleemosynarius, from late Latin eleemosyna ‘alms’, from Greek eleēmosunē ‘compassion’ </p>
+            </MCardText>
+            <MCardActions Class="pb-0">
+                <MButton Text Color="teal accent-4" OnClick="() => _reveal = false">Close</MButton>
+            </MCardActions>
+        </MCard>
+    </ExpandTransition>
+   </MCard>
+
+    <MCard Elevation="5" style="margin-bottom:10px" Class="mx-auto card-misc-reveal">
+        <MCardTitle>Card title</MCardTitle>
+        <MCardSubtitle>Subtitle text</MCardSubtitle>
+        <MCardText> Greyhound divisively hello coldly wonderfully marginally far upon excluding. </MCardText>
+        <MCardActions>
+            <MButton Text Color="primary">Action 1</MButton>
+            <MButton Text Color="primary">Action 2</MButton>
+        </MCardActions>
+    </MCard>
+   </MContainer>
+
+ </MMain>
 </MApp>
 
+</body>
+
 @code {
+    bool _reveal;//层叠卡片
+
+    class Card
+    {
+        public string Title { get; set; }
+        public string Src { get; set; }
+        public int Flex { get; set; }
+    }
+
+    Card[] _cards = new Card[]
+                {
+        new Card
+        {
+            Title="Pre-fab homes",
+            Src="https://cdn.masastack.com/stack/images/website/masa-blazor/cards/house.jpg",
+            Flex=12,
+        },
+         new Card
+        {
+            Title="Favorite road trips",
+            Src="https://cdn.masastack.com/stack/images/website/masa-blazor/cards/road.jpg",
+            Flex=6,
+        },
+         new Card
+        {
+            Title="Best airlines",
+            Src="https://cdn.masastack.com/stack/images/website/masa-blazor/cards/plane.jpg",
+            Flex=6,
+        }
+                };
 
     [Parameter]
-    public List<string> Chems { get; set; }
+    public List<string> ?Chems { get; set; }
 
     private void PageItemHandler()
     {
+
+    }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public Component()
+    {
+        DataSources DT = new();
         
     }
 
